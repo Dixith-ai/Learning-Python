@@ -1,9 +1,3 @@
-# Automation system files (hidden from repository)
-.automation/
-# But keep workflow and schedule visible
-!.github/
-!schedule.json
-
 # Python cache files
 __pycache__/
 *.py[cod]
@@ -116,3 +110,6 @@ dmypy.json
 # OS
 .DS_Store
 Thumbs.db
+
+# Hide automation files
+.automation/
