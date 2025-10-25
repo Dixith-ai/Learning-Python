@@ -1,5 +1,4 @@
-# Automation files (hidden from repository view)
-.automation/
+# Staging directory for daily push automation
 _staging/
 
 # Python cache files
