@@ -162,8 +162,8 @@ jobs:
         echo "Current git status:"
         git status
         
-        # Get the files that were copied (from the files.json)
-        FILES_TO_COMMIT=$(cat files.json | python -c "import json, sys; print(' '.join(json.load(sys.stdin)))")
+        # Get the files that were copied (from the step output)
+        FILES_TO_COMMIT='${{ steps.get-files.outputs.files }}'
         echo "Files to commit: $FILES_TO_COMMIT"
         
         # Add only the specific Python files that were copied
