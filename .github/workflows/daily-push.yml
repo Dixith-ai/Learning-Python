@@ -152,11 +152,6 @@ jobs:
         # Run the copy script
         python copy_files.py
     
-    - name: Clean up temporary files
-      run: |
-        # Remove temporary files that shouldn't be committed
-        rm -f files.json debug.log get_files.py copy_files.py progress_summary.py progress.json
-    
     - name: Commit and push changes
       run: |
         # Configure git
@@ -202,6 +197,11 @@ jobs:
           
           echo "Successfully pushed files for day $DAY"
         fi
+    
+    - name: Clean up temporary files
+      run: |
+        # Remove temporary files that shouldn't be committed
+        rm -f files.json debug.log get_files.py copy_files.py progress_summary.py progress.json
     
     - name: Create progress summary
       run: |
