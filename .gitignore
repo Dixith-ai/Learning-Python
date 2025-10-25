@@ -1,5 +1,5 @@
-# Staging directory for daily push automation
-_staging/
+# Automation system files (hidden from repository)
+.automation/
 
 # Python cache files
 __pycache__/
