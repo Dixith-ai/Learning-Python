@@ -33,8 +33,8 @@ jobs:
     - name: Calculate current day
       id: calculate-day
       run: |
-        # Use a fixed start date for consistent day calculation
-        START_DATE="2024-01-01"
+        # Use today's date as start date for Day 1
+        START_DATE="2025-10-25"
         
         # Calculate days since start date
         START_TIMESTAMP=$(date -d "$START_DATE" +%s)

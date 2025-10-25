@@ -1,6 +1,6 @@
 {
   "total_days": 70,
-  "start_date": "2024-01-01",
+  "start_date": "2025-10-25",
   "schedule": {
     "1": ["beginner/hello_world.py", "beginner/armstrong.py"],
     "2": ["beginner/basic_calculator.py", "beginner/bubble_sort.py"],
