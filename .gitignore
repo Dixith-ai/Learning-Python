@@ -1,5 +1,6 @@
 # Automation system files (hidden from repository)
 .automation/
+staging/
 # But keep workflow and schedule visible
 !.github/
 !schedule.json
