@@ -97,9 +97,14 @@ jobs:
         with open('files.json', 'r') as f:
             files = json.load(f)
         
+        print(f'Files to copy: {files}')
+        
         for file_path in files:
             source = Path('_staging') / file_path
             dest = Path(file_path)
+            
+            print(f'Checking source: {source}')
+            print(f'Source exists: {source.exists()}')
             
             if source.exists():
                 # Ensure destination directory exists
@@ -107,9 +112,15 @@ jobs:
                 
                 # Copy file
                 shutil.copy2(source, dest)
-                print(f'Copied: {source} -> {dest}')
+                print(f'Successfully copied: {source} -> {dest}')
             else:
-                print(f'Warning: Source file not found: {source}')
+                print(f'ERROR: Source file not found: {source}')
+                # List what's actually in the staging directory
+                staging_dir = Path('_staging')
+                if staging_dir.exists():
+                    print(f'Contents of _staging: {list(staging_dir.rglob(\"*\"))}')
+                else:
+                    print('_staging directory does not exist!')
         "
     
     - name: Commit and push changes
@@ -118,8 +129,16 @@ jobs:
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
         
+        # Show current status
+        echo "Current git status:"
+        git status
+        
         # Add all changes
         git add .
+        
+        # Show what's staged
+        echo "Staged changes:"
+        git diff --staged --name-only
         
         # Check if there are changes to commit
         if git diff --staged --quiet; then
@@ -129,9 +148,11 @@ jobs:
           DAY=${{ steps.calculate-day.outputs.day }}
           COMMIT_MSG="Day $DAY: Push scheduled files"
           
+          echo "Committing with message: $COMMIT_MSG"
           git commit -m "$COMMIT_MSG"
           
           # Push changes
+          echo "Pushing to origin main..."
           git push origin main
           
           echo "Successfully pushed files for day $DAY"
