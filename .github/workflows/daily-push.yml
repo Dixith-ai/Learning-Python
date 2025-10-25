@@ -176,8 +176,8 @@ jobs:
           git add "beginner/factorial.py"
         fi
         
-        # Add any other files that might have been copied
-        for file in $(find . -name "*.py" -not -path "./files/*" -not -path "./.git/*" -not -path "./.github/*" -not -path "./.automation/*"); do
+        # Add any other files that might have been copied (excluding temporary scripts)
+        for file in $(find . -name "*.py" -not -path "./files/*" -not -path "./.git/*" -not -path "./.github/*" -not -path "./.automation/*" -not -name "copy_files.py" -not -name "get_files.py" -not -name "progress_summary.py"); do
           if [ -f "$file" ]; then
             echo "Adding file: $file"
             git add "$file"
