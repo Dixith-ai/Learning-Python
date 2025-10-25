@@ -59,8 +59,8 @@ jobs:
     - name: Get files for current day
       id: get-files
       run: |
-        # First, get the files and show debug info
-        python -c "
+        # Create a simple Python script to get files
+        cat > get_files.py << 'EOF'
         import json
         import sys
         
@@ -68,7 +68,7 @@ jobs:
             with open('schedule.json', 'r') as f:
                 schedule_data = json.load(f)
             
-            day = ${{ steps.calculate-day.outputs.day }}
+            day = sys.argv[1]
             print(f'Looking for day {day} in schedule', file=sys.stderr)
             
             files = schedule_data['schedule'].get(str(day), [])
@@ -86,7 +86,13 @@ jobs:
             import traceback
             traceback.print_exc()
             sys.exit(1)
-        " > files.json
+        EOF
+        
+        # Run the script and capture output
+        python get_files.py ${{ steps.calculate-day.outputs.day }} > files.json 2> debug.log
+        
+        echo "Debug log:"
+        cat debug.log
         
         echo "Contents of files.json:"
         cat files.json
