@@ -18,7 +18,7 @@ except Exception as e:
 print(f'Files to copy: {files}')
 
 for file_path in files:
-    source = Path('.automation/files') / file_path
+    source = Path('staging') / file_path
     dest = Path(file_path)
     
     print(f'Checking source: {source}')
@@ -33,9 +33,9 @@ for file_path in files:
         print(f'Successfully copied: {source} -> {dest}')
     else:
         print(f'ERROR: Source file not found: {source}')
-        # List what's actually in the .automation/files directory
-        files_dir = Path('.automation/files')
+        # List what's actually in the staging directory
+        files_dir = Path('staging')
         if files_dir.exists():
-            print(f'Contents of .automation/files: {list(files_dir.rglob("*"))}')
+            print(f'Contents of staging: {list(files_dir.rglob("*"))}')
         else:
-            print('.automation/files directory does not exist!')
+            print('staging directory does not exist!')
