@@ -68,19 +68,29 @@ jobs:
                 schedule_data = json.load(f)
             
             day = ${{ steps.calculate-day.outputs.day }}
+            print(f'Looking for day {day} in schedule')
+            
             files = schedule_data['schedule'].get(str(day), [])
+            print(f'Found files: {files}')
             
             if not files:
                 print(f'No files scheduled for day {day}')
                 sys.exit(1)
             
             # Output files as JSON array
-            print(json.dumps(files))
+            json_output = json.dumps(files)
+            print(f'JSON output: {json_output}')
+            print(json_output)
             
         except Exception as e:
             print(f'Error reading schedule: {e}')
+            import traceback
+            traceback.print_exc()
             sys.exit(1)
         " > files.json
+        
+        echo "Contents of files.json:"
+        cat files.json
         
         # Set output
         FILES=$(cat files.json)
@@ -96,8 +106,17 @@ jobs:
         import os
         from pathlib import Path
         
-        with open('files.json', 'r') as f:
-            files = json.load(f)
+        print('Reading files.json...')
+        try:
+            with open('files.json', 'r') as f:
+                content = f.read()
+                print(f'Raw content: {repr(content)}')
+                files = json.loads(content)
+        except Exception as e:
+            print(f'Error reading files.json: {e}')
+            import traceback
+            traceback.print_exc()
+            exit(1)
         
         print(f'Files to copy: {files}')
         
