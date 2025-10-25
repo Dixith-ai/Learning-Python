@@ -1,3 +1,7 @@
+# Automation files (hidden from repository view)
+.automation/
+_staging/
+
 # Python cache files
 __pycache__/
 *.py[cod]
