@@ -59,6 +59,7 @@ jobs:
     - name: Get files for current day
       id: get-files
       run: |
+        # First, get the files and show debug info
         python -c "
         import json
         import sys
@@ -68,22 +69,20 @@ jobs:
                 schedule_data = json.load(f)
             
             day = ${{ steps.calculate-day.outputs.day }}
-            print(f'Looking for day {day} in schedule')
+            print(f'Looking for day {day} in schedule', file=sys.stderr)
             
             files = schedule_data['schedule'].get(str(day), [])
-            print(f'Found files: {files}')
+            print(f'Found files: {files}', file=sys.stderr)
             
             if not files:
-                print(f'No files scheduled for day {day}')
+                print(f'No files scheduled for day {day}', file=sys.stderr)
                 sys.exit(1)
             
-            # Output files as JSON array
-            json_output = json.dumps(files)
-            print(f'JSON output: {json_output}')
-            print(json_output)
+            # Output ONLY the JSON to stdout
+            print(json.dumps(files))
             
         except Exception as e:
-            print(f'Error reading schedule: {e}')
+            print(f'Error reading schedule: {e}', file=sys.stderr)
             import traceback
             traceback.print_exc()
             sys.exit(1)
