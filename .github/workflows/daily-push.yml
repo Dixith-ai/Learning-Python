@@ -25,6 +25,20 @@ jobs:
         token: ${{ secrets.GITHUB_TOKEN }}
         fetch-depth: 0
     
+    - name: Debug - Show repository contents
+      run: |
+        echo "Current commit:"
+        git log -1 --oneline
+        echo "Files in root:"
+        ls -la
+        echo "Checking for schedule.json:"
+        if [ -f "schedule.json" ]; then
+          echo "schedule.json EXISTS"
+          cat schedule.json
+        else
+          echo "schedule.json NOT FOUND"
+        fi
+    
     - name: Set up Python
       uses: actions/setup-python@v5
       with:
