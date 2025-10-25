@@ -125,9 +125,9 @@ jobs:
         
         print(f'Files to copy: {files}')
         
-            for file_path in files:
-                source = Path('files') / file_path
-                dest = Path(file_path)
+        for file_path in files:
+            source = Path('files') / file_path
+            dest = Path(file_path)
             
             print(f'Checking source: {source}')
             print(f'Source exists: {source.exists()}')
@@ -141,12 +141,12 @@ jobs:
                 print(f'Successfully copied: {source} -> {dest}')
             else:
                 print(f'ERROR: Source file not found: {source}')
-                    # List what's actually in the files directory
-                    files_dir = Path('files')
-                    if files_dir.exists():
-                        print(f'Contents of files: {list(files_dir.rglob("*"))}')
-                    else:
-                        print('files directory does not exist!')
+                # List what's actually in the files directory
+                files_dir = Path('files')
+                if files_dir.exists():
+                    print(f'Contents of files: {list(files_dir.rglob("*"))}')
+                else:
+                    print('files directory does not exist!')
         EOF
         
         # Run the copy script
