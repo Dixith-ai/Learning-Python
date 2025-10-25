@@ -2,6 +2,7 @@
 .automation/
 staging/
 _files/
+files/
 # But keep workflow and schedule visible
 !.github/
 !schedule.json
