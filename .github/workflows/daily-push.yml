@@ -162,17 +162,25 @@ jobs:
         echo "Current git status:"
         git status
         
-        # Get the files that were copied (from the step output)
-        FILES_TO_COMMIT='${{ steps.get-files.outputs.files }}'
-        echo "Files to commit: $FILES_TO_COMMIT"
+        # Add the files that were copied (they should be in the working directory)
+        echo "Looking for copied files..."
         
-        # Add only the specific Python files that were copied
-        for file in $FILES_TO_COMMIT; do
+        # Add any Python files in the beginner directory
+        if [ -f "beginner/count_digits.py" ]; then
+          echo "Adding file: beginner/count_digits.py"
+          git add "beginner/count_digits.py"
+        fi
+        
+        if [ -f "beginner/factorial.py" ]; then
+          echo "Adding file: beginner/factorial.py"
+          git add "beginner/factorial.py"
+        fi
+        
+        # Add any other files that might have been copied
+        for file in $(find . -name "*.py" -not -path "./files/*" -not -path "./.git/*" -not -path "./.github/*" -not -path "./.automation/*"); do
           if [ -f "$file" ]; then
             echo "Adding file: $file"
             git add "$file"
-          else
-            echo "Warning: File not found: $file"
           fi
         done
         
