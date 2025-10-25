@@ -151,57 +151,57 @@ jobs:
         
         # Run the copy script
         python copy_files.py
+    
+    - name: Clean up temporary files
+      run: |
+        # Remove temporary files that shouldn't be committed
+        rm -f files.json debug.log get_files.py copy_files.py progress_summary.py progress.json
+    
+    - name: Commit and push changes
+      run: |
+        # Configure git
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
         
-        - name: Clean up temporary files
-          run: |
-            # Remove temporary files that shouldn't be committed
-            rm -f files.json debug.log get_files.py copy_files.py progress_summary.py progress.json
+        # Show current status
+        echo "Current git status:"
+        git status
         
-        - name: Commit and push changes
-          run: |
-            # Configure git
-            git config --local user.email "action@github.com"
-            git config --local user.name "GitHub Action"
-            
-            # Show current status
-            echo "Current git status:"
-            git status
-            
-            # Get the files that were copied (from the files.json)
-            FILES_TO_COMMIT=$(cat files.json | python -c "import json, sys; print(' '.join(json.load(sys.stdin)))")
-            echo "Files to commit: $FILES_TO_COMMIT"
-            
-            # Add only the specific Python files that were copied
-            for file in $FILES_TO_COMMIT; do
-              if [ -f "$file" ]; then
-                echo "Adding file: $file"
-                git add "$file"
-              else
-                echo "Warning: File not found: $file"
-              fi
-            done
-            
-            # Show what's staged
-            echo "Staged changes:"
-            git diff --staged --name-only
-            
-            # Check if there are changes to commit
-            if git diff --staged --quiet; then
-              echo "No changes to commit"
-            else
-              # Commit with descriptive message
-              DAY=${{ steps.calculate-day.outputs.day }}
-              COMMIT_MSG="Day $DAY: Push scheduled files"
-              
-              echo "Committing with message: $COMMIT_MSG"
-              git commit -m "$COMMIT_MSG"
-              
-              # Push changes
-              echo "Pushing to origin main..."
-              git push origin main
-              
-              echo "Successfully pushed files for day $DAY"
-            fi
+        # Get the files that were copied (from the files.json)
+        FILES_TO_COMMIT=$(cat files.json | python -c "import json, sys; print(' '.join(json.load(sys.stdin)))")
+        echo "Files to commit: $FILES_TO_COMMIT"
+        
+        # Add only the specific Python files that were copied
+        for file in $FILES_TO_COMMIT; do
+          if [ -f "$file" ]; then
+            echo "Adding file: $file"
+            git add "$file"
+          else
+            echo "Warning: File not found: $file"
+          fi
+        done
+        
+        # Show what's staged
+        echo "Staged changes:"
+        git diff --staged --name-only
+        
+        # Check if there are changes to commit
+        if git diff --staged --quiet; then
+          echo "No changes to commit"
+        else
+          # Commit with descriptive message
+          DAY=${{ steps.calculate-day.outputs.day }}
+          COMMIT_MSG="Day $DAY: Push scheduled files"
+          
+          echo "Committing with message: $COMMIT_MSG"
+          git commit -m "$COMMIT_MSG"
+          
+          # Push changes
+          echo "Pushing to origin main..."
+          git push origin main
+          
+          echo "Successfully pushed files for day $DAY"
+        fi
     
     - name: Create progress summary
       run: |
