@@ -31,11 +31,8 @@ jobs:
     - name: Calculate current day
       id: calculate-day
       run: |
-        # Get start date from schedule.json or use default
+        # Use a fixed start date for consistent day calculation
         START_DATE="2024-01-01"
-        if [ -f "_staging/schedule.json" ]; then
-          START_DATE=$(python -c "import json; data=json.load(open('_staging/schedule.json')); print(data['start_date'])")
-        fi
         
         # Calculate days since start date
         START_TIMESTAMP=$(date -d "$START_DATE" +%s)
@@ -65,7 +62,7 @@ jobs:
         import sys
         
         try:
-            with open('_staging/schedule.json', 'r') as f:
+            with open('schedule.json', 'r') as f:
                 schedule_data = json.load(f)
             
             day = ${{ steps.calculate-day.outputs.day }}
