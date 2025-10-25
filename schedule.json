@@ -1,0 +1,15 @@
+{
+  "start_date": "2025-10-25",
+  "schedule": {
+    "1": ["beginner/hello_world.py", "beginner/armstrong.py"],
+    "2": ["beginner/basic_calculator.py", "beginner/bubble_sort.py"],
+    "3": ["beginner/count_digits.py", "beginner/factorial.py"],
+    "4": ["beginner/fibonacci.py", "beginner/gcd_lcm.py"],
+    "5": ["beginner/leap_year.py", "beginner/odd_even.py"],
+    "6": ["beginner/palindrome.py", "beginner/positive_negative.py"],
+    "7": ["beginner/prime_checker.py", "beginner/reverse_string.py"],
+    "8": ["beginner/sum_digits.py", "beginner/sum_natural.py"],
+    "9": ["beginner/swap_variables.py", "intermediate/anagram_check.py"],
+    "10": ["intermediate/check_sorted.py", "intermediate/common_elements.py"]
+  }
+}
